@@ -5,8 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class LocalDatabase extends SQLiteOpenHelper {
     public LocalDatabase(@Nullable Context context) {
@@ -139,7 +144,13 @@ public class LocalDatabase extends SQLiteOpenHelper {
     public void deleteCategory(int categoryID) {
         SQLiteDatabase db = getWritableDatabase();
 
-        String whereClause = "id = ?";
+        String whereClause = "categoryID = ?;";
+
+        db.delete("task", whereClause, new String[]{String.valueOf(categoryID)});
+
+        Log.d("CHECK", getTasks(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid(), categoryID).moveToNext() ? "Ada isi" : "Kosong");
+
+        whereClause = "id = ?";
 
         db.delete("category", whereClause, new String[]{String.valueOf(categoryID)});
         db.close();
