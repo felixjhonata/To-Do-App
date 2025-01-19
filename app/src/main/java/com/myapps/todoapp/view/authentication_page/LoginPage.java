@@ -81,17 +81,21 @@ public class LoginPage extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog progressDialog = AlertFactory.showProgressDialog(LoginPage.this);
 
-                uc.Login(emailEdt, passwordEdt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
+                if(uc.validateRegisterField(emailEdt, passwordEdt, passwordEdt)) {
+                    uc.Login(emailEdt, passwordEdt).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()) {
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
+                            }
+                            progressDialog.dismiss();
                         }
-                        progressDialog.dismiss();
-                    }
-                });
+                    });
+                } else {
+                    progressDialog.dismiss();
+                }
             }
         });
     }

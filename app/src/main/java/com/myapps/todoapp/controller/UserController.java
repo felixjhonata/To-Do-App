@@ -55,11 +55,7 @@ public class UserController {
         String email = emailEdt.getText().toString();
         String password = passwordEdt.getText().toString();
 
-        try{
-            return firebaseAuth.signInWithEmailAndPassword(email, password);
-        } catch (Exception e) {
-            return Tasks.forException(e);
-        }
+        return firebaseAuth.signInWithEmailAndPassword(email, password);
     }
 
     public void Logout() {
