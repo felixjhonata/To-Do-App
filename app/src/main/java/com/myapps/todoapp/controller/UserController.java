@@ -3,6 +3,7 @@ package com.myapps.todoapp.controller;
 import android.widget.EditText;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -54,7 +55,11 @@ public class UserController {
         String email = emailEdt.getText().toString();
         String password = passwordEdt.getText().toString();
 
-        return firebaseAuth.signInWithEmailAndPassword(email, password);
+        try{
+            return firebaseAuth.signInWithEmailAndPassword(email, password);
+        } catch (Exception e) {
+            return Tasks.forException(e);
+        }
     }
 
     public void Logout() {

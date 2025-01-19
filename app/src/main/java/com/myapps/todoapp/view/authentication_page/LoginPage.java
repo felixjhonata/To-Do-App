@@ -25,6 +25,8 @@ import com.myapps.todoapp.R;
 import com.myapps.todoapp.controller.UserController;
 import com.myapps.todoapp.model.AlertFactory;
 
+import java.util.Objects;
+
 public class LoginPage extends AppCompatActivity {
 
     private FloatingActionButton backBtn;
@@ -85,12 +87,11 @@ public class LoginPage extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             finish();
                         } else {
-                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
                         }
                         progressDialog.dismiss();
                     }
                 });
-
             }
         });
     }
